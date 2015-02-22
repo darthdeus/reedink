@@ -12,17 +12,19 @@ Flag library-only
     Default:       False
 
 library
-    hs-source-dirs: ., app, Models
+    hs-source-dirs: ., app
     exposed-modules: Application
                      Foundation
                      Import
                      Import.NoFoundation
                      Model
-                     Models.Literature
                      Settings
                      Settings.StaticFiles
                      Handler.Common
                      Handler.Home
+                     Handler.Readable
+                     Helpers.Common
+                     Models.Readable
 
     if flag(dev) || flag(library-only)
         cpp-options:   -DDEVELOPMENT

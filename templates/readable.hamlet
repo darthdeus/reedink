@@ -1,0 +1,7 @@
+<h1>#{readable ^. readableTitle}
+
+<form action=@{ReadableR key}?_method=PUT method="POST">
+    ^{form}
+
+<a href=@{ReadablesR}>Back to index
+^{tlinkToMethodConfirm "DELETE" "Are you sure?" (ReadableR key) [] "Delete"}

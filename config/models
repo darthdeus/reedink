@@ -9,16 +9,11 @@ Email
     verkey Text Maybe
     UniqueEmail email
 
-Author
-    name Text
-    ownerId UserId
-
-Literature
+Readable
     title Text
     description Text
-    type LiteratureType
-    authorId AuthorId
+    type ReadableType
+    author Text
     pageCount Int
     ownerId UserId
-
- -- By default this file is used in Model.hs (which is imported by Foundation.hs)
+    deriving Show

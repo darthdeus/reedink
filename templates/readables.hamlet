@@ -1,0 +1,10 @@
+<h1>Add new literature
+<form action=@{ReadablesR} method="POST">
+    ^{form}
+
+<h2>Existing ones
+
+<ul>
+    $forall Entity key readable <- items
+        <li>
+            <a href=@{ReadableR key}>#{readable ^. readableTitle}
