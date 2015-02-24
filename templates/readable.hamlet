@@ -3,5 +3,9 @@
 <form action=@{ReadableR key}?_method=PUT method="POST">
     ^{form}
 
+<h2>You read
+$forall Entity recordId record <- records
+    <p>Read #{recordPagesTotal record} pages
+
 <a href=@{ReadablesR}>Back to index
 ^{tlinkToMethodConfirm "DELETE" "Are you sure?" (ReadableR key) [] "Delete"}

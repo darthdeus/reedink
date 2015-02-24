@@ -23,8 +23,11 @@ library
                      Handler.Common
                      Handler.Home
                      Handler.Readable
+                     Handler.Record
                      Helpers.Common
                      Models.Readable
+                     Models.Record
+
 
     if flag(dev) || flag(library-only)
         cpp-options:   -DDEVELOPMENT
@@ -86,6 +89,7 @@ library
                  , time
                  , lens >= 4.6 && < 4.7
                  , foreign-store
+                 , esqueleto
 
 executable         reedink
     if flag(library-only)

@@ -3,10 +3,12 @@ module Handler.Readable where
 import Control.Lens
 import Data.Maybe
 import Import
-import Models.Readable
 import Yesod.Form.Bootstrap3
 import qualified Data.Text as T
+
 import Helpers.Common
+import Models.Readable
+import Models.Record
 
 bs :: Text -> FieldSettings App
 bs = bfs
@@ -51,6 +53,8 @@ getReadableR :: ReadableId -> Handler Html
 getReadableR key = do
   userid <- requireAuthId
   readable <- runDB $ get404 key
+  records <- runDB $ selectList [RecordReadableId ==. key] []
+
   (form, _) <- generateFormPost $ readableForm userid $ Just readable
 
   defaultLayout $(widgetFile "readable")
@@ -59,6 +63,8 @@ putReadableR :: ReadableId -> Handler Html
 putReadableR key = do
   userid <- requireAuthId
   readable <- runDB $ get404 key
+  records <- runDB $ selectList [RecordReadableId ==. key] []
+
   ((res,form), _) <- runFormPost $ readableForm userid $ Just readable
 
   case res of
@@ -66,6 +72,7 @@ putReadableR key = do
       void . runDB $ replace key newReadable
       setMessage "Update successful."
       redirect $ ReadableR key
+
 
     _ -> defaultLayout $(widgetFile "readable")
 

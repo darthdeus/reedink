@@ -22,4 +22,6 @@ Record
     readableId ReadableId
     pageStart Int
     pageEnd Int
+    userId UserId
     createdAt UTCTime
+    deriving Show
