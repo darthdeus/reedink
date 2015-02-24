@@ -17,3 +17,9 @@ Readable
     pageCount Int
     ownerId UserId
     deriving Show
+
+Record
+    readableId ReadableId
+    pageStart Int
+    pageEnd Int
+    createdAt UTCTime
