@@ -27,6 +27,11 @@ $newline never
     <script>
       document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/,'js');
   <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="@{ReadablesR}">Reedink
+
     <div class="container">
       <header>
       <div id="main" role="main">

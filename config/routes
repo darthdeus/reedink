@@ -6,5 +6,7 @@
 
 / ReadablesR GET POST
 /readables/#ReadableId ReadableR GET PUT DELETE
+/readables/#ReadableId/edit ReadableEditR GET
+/new-readable ReadablesNewR GET
 
 /readables/#ReadableId/records RecordsR POST

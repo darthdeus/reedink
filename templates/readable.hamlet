@@ -11,7 +11,7 @@
 <p>Add a new reading record
 
 <form action=@{RecordsR key} method="POST">
-    ^{recform}
+    ^{form}
 
 <a href=@{ReadablesR}>Back to index
 &nbsp;|&nbsp;
@@ -19,7 +19,4 @@
 
 <hr>
 
-<h3>Edit the readable
-
-<form action=@{ReadableR key}?_method=PUT method="POST">
-    ^{form}
+<a href=@{ReadableEditR key}>Edit this literature

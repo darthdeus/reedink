@@ -25,11 +25,15 @@ readableForm ownerId mr = renderBootstrap3 BootstrapBasicForm $ Readable
 
 getReadablesR :: Handler Html
 getReadablesR = do
+  items <- runDB $ selectList [] []
+  defaultLayout $(widgetFile "readables")
+
+getReadablesNewR :: Handler Html
+getReadablesNewR = do
   userid <- requireAuthId
   (form, _) <- generateFormPost $ readableForm userid Nothing
 
-  items <- runDB $ selectList [] []
-  defaultLayout $(widgetFile "readables")
+  defaultLayout $(widgetFile "readables-new")
 
 postReadablesR :: Handler Html
 postReadablesR = do
@@ -42,28 +46,32 @@ postReadablesR = do
       setMessage "Readable created."
       redirect ReadablesR
 
-    _ -> do
-      items <- runDB $ selectList [] []
-      defaultLayout $(widgetFile "readables")
+    _ -> defaultLayout $(widgetFile "readables-new")
 
 getReadableR :: ReadableId -> Handler Html
 getReadableR key = do
   userid <- requireAuthId
   readable <- runDB $ get404 key
-  records <- runDB $ selectList [RecordReadableId ==. key] []
+  records <- runDB $ selectList [RecordReadableId ==. key,
+                                 RecordUserId ==. userid] []
 
-  (recform, _) <- generateFormPost $ recordForm key userid Nothing
-  (form, _) <- generateFormPost $ readableForm userid $ Just readable
+  (form, _) <- generateFormPost $ recordForm key userid Nothing
 
   defaultLayout $(widgetFile "readable")
+
+getReadableEditR :: ReadableId -> Handler Html
+getReadableEditR key = do
+  userid <- requireAuthId
+  readable <- runDB $ get404 key
+  (form, _) <- generateFormPost $ readableForm userid $ Just readable
+
+  defaultLayout $(widgetFile "readable-edit")
 
 putReadableR :: ReadableId -> Handler Html
 putReadableR key = do
   userid <- requireAuthId
   readable <- runDB $ get404 key
-  records <- runDB $ selectList [RecordReadableId ==. key] []
 
-  (recform, _) <- generateFormPost $ recordForm key userid Nothing
   ((res,form), _) <- runFormPost $ readableForm userid $ Just readable
 
   case res of
@@ -72,8 +80,7 @@ putReadableR key = do
       setMessage "Update successful."
       redirect $ ReadableR key
 
-
-    _ -> defaultLayout $(widgetFile "readable")
+    _ -> defaultLayout $(widgetFile "readable-edit")
 
 deleteReadableR :: ReadableId -> Handler Html
 deleteReadableR key = do
