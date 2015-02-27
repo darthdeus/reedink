@@ -1,6 +1,7 @@
 module Helpers.Common where
 
 import Import
+import Yesod.Form.Bootstrap3
 
 glyphicon :: Text -> Widget
 glyphicon name = toWidget [hamlet|<span class="glyphicon glyphicon-#{name}">|]
@@ -35,3 +36,10 @@ currentUser = do
   case maid of
     Just userId -> runDB $ get userId
     Nothing -> return Nothing
+
+
+submitButton :: MonadHandler m => Text -> AForm m ()
+submitButton text = bootstrapSubmit (BootstrapSubmit text "btn-default" [])
+
+bs :: Text -> FieldSettings App
+bs = bfs

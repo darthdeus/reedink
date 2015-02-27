@@ -1,11 +1,25 @@
 <h1>#{readable ^. readableTitle}
+<h3>by #{readable ^. readableAuthor}
+
+<p>Here's your reading history
+<ul>
+    $forall Entity recordId record <- records
+        <li>
+            Read #{recordPagesTotal record} pages
+                (from #{record ^. recordPageStart} to #{record ^. recordPageEnd})
+
+<p>Add a new reading record
+
+<form action=@{RecordsR key} method="POST">
+    ^{recform}
+
+<a href=@{ReadablesR}>Back to index
+&nbsp;|&nbsp;
+^{tlinkToMethodConfirm "DELETE" "Are you sure?" (ReadableR key) [] "Delete"}
+
+<hr>
+
+<h3>Edit the readable
 
 <form action=@{ReadableR key}?_method=PUT method="POST">
     ^{form}
-
-<h2>You read
-$forall Entity recordId record <- records
-    <p>Read #{recordPagesTotal record} pages
-
-<a href=@{ReadablesR}>Back to index
-^{tlinkToMethodConfirm "DELETE" "Are you sure?" (ReadableR key) [] "Delete"}

@@ -10,9 +10,6 @@ import Helpers.Common
 import Models.Readable
 import Models.Record
 
-bs :: Text -> FieldSettings App
-bs = bfs
-
 readableForm :: UserId -> Maybe Readable -> Form Readable
 readableForm ownerId mr = renderBootstrap3 BootstrapBasicForm $ Readable
         <$> areq textField (bs "Title") (_readableTitle <$> mr)
@@ -55,6 +52,7 @@ getReadableR key = do
   readable <- runDB $ get404 key
   records <- runDB $ selectList [RecordReadableId ==. key] []
 
+  (recform, _) <- generateFormPost $ recordForm key userid Nothing
   (form, _) <- generateFormPost $ readableForm userid $ Just readable
 
   defaultLayout $(widgetFile "readable")
@@ -65,6 +63,7 @@ putReadableR key = do
   readable <- runDB $ get404 key
   records <- runDB $ selectList [RecordReadableId ==. key] []
 
+  (recform, _) <- generateFormPost $ recordForm key userid Nothing
   ((res,form), _) <- runFormPost $ readableForm userid $ Just readable
 
   case res of
