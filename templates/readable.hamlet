@@ -3,7 +3,7 @@
 
 <p>Here's your reading history
 <ul>
-    $forall Entity recordId record <- records
+    $forall Entity _ record <- records
         <li>
             Read #{recordPagesTotal record} pages
                 (from #{record ^. recordPageStart} to #{record ^. recordPageEnd})
@@ -15,8 +15,20 @@
 
 <hr>
 
+^{postButton "Unread" (ReadableStatusUpdateR key Unread)}
+^{postButton "To read" (ReadableStatusUpdateR key ToRead)}
+^{postButton "Reading" (ReadableStatusUpdateR key Reading)}
+^{postButton "Done" (ReadableStatusUpdateR key DoneReading)}
+
+$maybe Entity _ reading <- mreading
+    ... currently #{show $ reading ^. userReadingStatus}
+$nothing
+    ... you're not reading this book
+
+<hr>
+
 <a href=@{ReadableEditR key}>Edit this literature
 &nbsp;|&nbsp;
 <a href=@{ReadablesR}>Back to index
 &nbsp;|&nbsp;
-^{tlinkToMethodConfirm "DELETE" "Are you sure?" (ReadableR key) [] "Delete"}
+^{linkToMethodConfirm "DELETE" "Are you sure?" (ReadableR key) [] "Delete"}

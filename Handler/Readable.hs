@@ -56,6 +56,9 @@ getReadableR key = do
   records <- runDB $ selectList [RecordReadableId ==. key,
                                  RecordUserId ==. userid] []
 
+  mreading <- runDB $ selectFirst [UserReadingUserId ==. userid,
+                                   UserReadingReadableId ==. key] []
+
   (form, _) <- generateFormPost $ recordForm key userid Nothing
 
   defaultLayout $(widgetFile "readable")
