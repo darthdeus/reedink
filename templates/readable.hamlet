@@ -10,13 +10,13 @@
 
 <p>Add a new reading record
 
-<form action=@{RecordsR key} method="POST">
+<form .form-inline action=@{RecordsR key} method="POST">
     ^{form}
-
-<a href=@{ReadablesR}>Back to index
-&nbsp;|&nbsp;
-^{tlinkToMethodConfirm "DELETE" "Are you sure?" (ReadableR key) [] "Delete"}
 
 <hr>
 
 <a href=@{ReadableEditR key}>Edit this literature
+&nbsp;|&nbsp;
+<a href=@{ReadablesR}>Back to index
+&nbsp;|&nbsp;
+^{tlinkToMethodConfirm "DELETE" "Are you sure?" (ReadableR key) [] "Delete"}

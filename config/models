@@ -18,6 +18,11 @@ Readable
     ownerId UserId
     deriving Show
 
+UserReading
+    readableId ReadableId
+    userId UserId
+    status ReadingStatus
+
 Record
     readableId ReadableId
     pageStart Int

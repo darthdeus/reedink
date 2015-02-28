@@ -7,6 +7,7 @@ import Yesod.Form.Bootstrap3
 import qualified Data.Text as T
 
 import Helpers.Common
+import Models.ColumnTypes
 import Models.Readable
 import Models.Record
 
@@ -87,3 +88,16 @@ deleteReadableR key = do
   void . runDB $ delete key
   setMessage "Deleted successful."
   redirect ReadablesR
+
+postReadableStatusUpdateR :: ReadableId -> ReadingStatus -> Handler Html
+postReadableStatusUpdateR key status = do
+  userId <- requireAuthId
+  mreading <- runDB $ selectFirst [UserReadingUserId ==. userId,
+                                   UserReadingReadableId ==. key] []
+
+  case mreading of
+    Nothing -> void . runDB $ insert $ UserReading key userId status
+    Just (Entity readingKey _) -> runDB $ update readingKey [UserReadingStatus =. status]
+
+  setMessage "Status updated"
+  redirect $ ReadableR key

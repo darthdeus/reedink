@@ -1,9 +1,7 @@
 module Models.Readable where
 
 import ClassyPrelude.Yesod
-
-data ReadableType = Book
-                    | Paper
-  deriving (Show, Read, Eq)
+import Models.ColumnTypes
 
 derivePersistField "ReadableType"
+derivePersistField "ReadingStatus"
