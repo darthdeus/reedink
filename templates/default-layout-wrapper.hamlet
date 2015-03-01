@@ -38,6 +38,17 @@ $newline never
             <li>
                 <a href=@{ReadablesR}>Literature
 
+
+          <ul class="nav navbar-nav navbar-right">
+                <li>
+                    $maybe Entity _ user <- muser
+                        <p .navbar-text>
+                            Logged in as #{_userIdent user},&nbsp
+                            <a href=@{AuthR LogoutR}>Logout
+                    $nothing
+                        <a href=@{AuthR LoginR}>Log in
+
+
     <div class="container">
       <header>
       <div id="main" role="main">
