@@ -1,4 +1,6 @@
 <h1>Your profile
 
-$forall (Entity _ readable, Entity _ reading) <- items
-    <li>#{readable ^. readableTitle} #{show $ reading ^. userReadingStatus}
+$forall (Entity key readable, Entity _ reading) <- items
+    <li>
+        <a href=@{ReadableR key}>#{readable ^. readableTitle}
+        <span .label.label-default>#{show $ reading ^. userReadingStatus}
