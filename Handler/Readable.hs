@@ -8,15 +8,15 @@ import qualified Data.Text as T
 
 import Helpers.Common
 import Models.ColumnTypes
-import Models.Readable
+-- import Models.Readable
 import Models.Record
 
 readableForm :: UserId -> Maybe Readable -> Form Readable
 readableForm ownerId mr = renderBootstrap3 BootstrapBasicForm $ Readable
         <$> areq textField (bs "Title") (_readableTitle <$> mr)
-        <*> areq textField (bs "Description") (_readableDescription <$> mr)
-        <*> areq (selectFieldList types) (bs "Literature type") (_readableType <$> mr)
+        <*> aopt textField (bs "Description") (mr ^? _Just.readableDescription)
         <*> areq textField (bs "Author") (_readableAuthor <$> mr)
+        <*> areq (selectFieldList types) (bs "Literature type") (_readableType <$> mr)
         <*> areq intField (bs "# pages") (_readablePageCount <$> mr)
         <*> pure (maybe ownerId id (_readableOwnerId <$> mr))
         <*  bootstrapSubmit (BootstrapSubmit ("Submit" :: Text) "btn-default" [])

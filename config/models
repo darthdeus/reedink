@@ -11,9 +11,9 @@ Email
 
 Readable
     title Text
-    description Text
-    type ReadableType
+    description Text Maybe
     author Text
+    type ReadableType
     pageCount Int
     ownerId UserId
     deriving Show
