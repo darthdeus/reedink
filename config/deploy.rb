@@ -38,7 +38,7 @@ namespace :deploy do
     end
   end
 
-  after :updated, :cabal_build do
+  after :init_sandbox, :cabal_build do
     on roles(:app), in: :sequence, wait: 5 do
       within release_path do
         execute :cabal, "configure"
