@@ -23,6 +23,3 @@ instance PathPiece ReadingStatus where
   toPathPiece ToRead = "to-read"
   toPathPiece Reading = "reading"
   toPathPiece DoneReading = "done-reading"
-
-derivePersistField "ReadableType"
-derivePersistField "ReadingStatus"
