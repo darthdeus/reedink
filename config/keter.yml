@@ -38,12 +38,12 @@ stanzas:
     # directory-listing: true
 
   # Redirect plain domain name to www.
-  - type: redirect
-
-    hosts:
-      - reedink.jakubarnold.com
-    actions:
-      - host: www.reedink.com
+  # - type: redirect
+  #
+  #   hosts:
+  #     - reedink.com
+  #   actions:
+  #     - host: www.reedink.com
         # secure: false
         # port: 80
 
