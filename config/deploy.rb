@@ -22,12 +22,11 @@ set :default_env, { path: "/opt/ghc/7.8.4/bin:$HOME/.cabal/bin:$PATH" }
 
 namespace :deploy do
 
-  after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      # within release_path do
-      #   execute :rake, 'cache:clear'
-      # end
+  task :restart do
+    on roles(:web), in: :sequence, wait: 10 do
+      within release_path do
+        execute :sudo, :restart, :reedink
+      end
     end
   end
 
