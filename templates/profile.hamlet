@@ -1,4 +1,4 @@
 <h1>Your profile
 
 $forall (Entity _ readable, Entity _ reading) <- items
-    <li>#{_readableTitle readable} #{show $ _userReadingStatus reading}
+    <li>#{readable ^. readableTitle} #{show $ reading ^. userReadingStatus}

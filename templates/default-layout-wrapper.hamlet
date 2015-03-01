@@ -38,6 +38,11 @@ $newline never
             <li>
                 <a href=@{ReadablesR}>Literature
 
+            $maybe Entity _ _ <- muser
+                <li>
+                    <a href=@{ProfileR}>Profile
+
+
 
           <ul class="nav navbar-nav navbar-right">
                 <li>
