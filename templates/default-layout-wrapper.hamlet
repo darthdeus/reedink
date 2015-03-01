@@ -20,6 +20,7 @@ $newline never
     \<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     \<![endif]-->
 
+    <script src="http://d3js.org/d3.v3.min.js">
     <script src="https://code.jquery.com/jquery-2.1.3.min.js">
     <script src=@{StaticR (StaticRoute ["js", "application.js"] [])}>
     <link rel="stylesheet" type="text/css" href=@{StaticR (StaticRoute ["css", "custom.css"] [])}>
@@ -31,6 +32,11 @@ $newline never
       <div class="container-fluid">
         <div class="navbar-header">
           <a class="navbar-brand" href="@{ReadablesR}">Reedink
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li>
+                <a href=@{ReadablesR}>Literature
 
     <div class="container">
       <header>

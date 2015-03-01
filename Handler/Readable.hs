@@ -8,7 +8,7 @@ import qualified Data.Text as T
 
 import Helpers.Common
 import Models.ColumnTypes
--- import Models.Readable
+import Models.Readable
 import Models.Record
 
 readableForm :: UserId -> Maybe Readable -> Form Readable

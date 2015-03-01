@@ -8,6 +8,10 @@
             Read #{recordPagesTotal record} pages
                 (from #{record ^. recordPageStart} to #{record ^. recordPageEnd})
 
+<h3>Reading chart, read #{sum $ map (recordPagesTotal . entityVal) records} of #{readable ^. readablePageCount} pages total.
+<svg .chart>
+<hr>
+
 <p>Add a new reading record
 
 <form .form-inline action=@{RecordsR key} method="POST">
@@ -32,3 +36,6 @@ $nothing
 <a href=@{ReadablesR}>Back to index
 &nbsp;|&nbsp;
 ^{linkToMethodConfirm "DELETE" "Are you sure?" (ReadableR key) [] "Delete"}
+
+<script type="text/javascript">
+    visualizeReadPages(#{readable ^. readablePageCount}, #{chartData $ map entityVal records});

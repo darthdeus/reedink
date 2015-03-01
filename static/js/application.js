@@ -14,6 +14,9 @@ $(function() {
 
         return false;
     });
+
+
+
 });
 
 function handleMethod(link) {
@@ -30,4 +33,24 @@ function handleMethod(link) {
     form.appendTo('body');
 
     form.submit();
+}
+
+function visualizeReadPages(pages, data) {
+    var width = 400,
+        barHeight = 20;
+
+    var x = d3.scale.linear()
+        .domain([0, pages])
+        .range([0, width]);
+
+    var chart = d3.select(".chart")
+        .attr("width", width)
+        .attr("height", barHeight);
+
+    var bar = chart.selectAll("g")
+        .data(data).enter()
+        .append("rect")
+        .attr("x", function(d, i) { return x(d[0]); })
+        .attr("width", function(d, i) { return x(d[1] - d[0]); })
+        .attr("height", barHeight);
 }
