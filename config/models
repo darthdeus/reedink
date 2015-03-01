@@ -15,6 +15,7 @@ Readable
     author Text
     type ReadableType
     pageCount Int
+    url Text Maybe
     ownerId UserId
     deriving Show
 
