@@ -1,10 +1,19 @@
 module Models.Readable where
 
-import Import
+import Import hiding (on, (==.))
+import Control.Lens hiding (from)
 import Data.Aeson
-import Control.Lens
+import Database.Esqueleto hiding ((^.))
+import qualified Database.Esqueleto as E
 
 chartData :: [Record] -> Text
 chartData records = decodeUtf8 $ toStrict $ encode $ map encoder records
   where
     encoder r = [r ^. recordPageStart, r ^. recordPageEnd]
+
+userReadableReadings :: MonadIO m =>
+                        UserId -> SqlPersistT m [(Entity Readable, Entity UserReading)]
+userReadableReadings userId = select $ from $ \(r `LeftOuterJoin` u) -> do
+             on (r E.^. ReadableId ==. u E.^. UserReadingReadableId)
+             where_ (u E.^. UserReadingUserId ==. val userId)
+             return (r, u)

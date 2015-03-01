@@ -10,4 +10,6 @@
 /readables/#ReadableId/status/#ReadingStatus ReadableStatusUpdateR POST
 /new-readable ReadablesNewR GET
 
+/profile ProfileR GET
+
 /readables/#ReadableId/records RecordsR POST
