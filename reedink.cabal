@@ -27,7 +27,7 @@ library
                      Helpers.Common
                      Models.Readable
                      Models.Record
-
+                     Models.ColumnTypes
 
     if flag(dev) || flag(library-only)
         cpp-options:   -DDEVELOPMENT
