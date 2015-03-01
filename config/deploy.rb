@@ -30,4 +30,12 @@ namespace :deploy do
     end
   end
 
+  after :updated, :init_sandbox do
+    on roles(:app), in: :sequence, wait: 5 do
+      within current_path do
+        execute :cabal, "sandbox", "init", "--sandbox", "/opt/apps/.reedink-sandbox"
+      end
+    end
+  end
+
 end
