@@ -88,7 +88,18 @@ putReadableR key = do
 
 deleteReadableR :: ReadableId -> Handler Html
 deleteReadableR key = do
-  void . runDB $ delete key
+  userId <- requireAuthId
+  readable <- runDB $ get404 key
+
+  when (readable ^. readableOwnerId /= userId) $ do
+    setMessage "You're not authorized to do this."
+    redirect ReadablesR
+
+  runDB $ do
+    deleteWhere [RecordReadableId ==. key]
+    deleteWhere [UserReadingReadableId ==. key]
+    delete key
+
   setMessage "Deleted successful."
   redirect ReadablesR
 
