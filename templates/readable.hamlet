@@ -4,6 +4,9 @@
 $maybe description <- readable ^. readableDescription
     <div .description>#{description}
 
+$maybe url <- readable ^. readableUrl
+    <a href=#{url}>#{url}
+
 <p>Here's your reading history
 <ul>
     $forall Entity _ record <- records
