@@ -17,7 +17,7 @@ set :linked_files, fetch(:linked_files, []).push("config/settings.yml")
 # set :linked_dirs, fetch(:linked_dirs, []).push('bin', 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
 
 # Default value for default_env is {}
-# set :default_env, { path: "/opt/ruby/bin:$PATH" }
+set :default_env, { path: "/opt/ghc/7.8.4/bin:$HOME/.cabal/bin:$PATH" }
 
 namespace :deploy do
 
@@ -37,5 +37,14 @@ namespace :deploy do
       end
     end
   end
+
+  after :updated, :cabal_build do
+    on roles(:app), in: :sequence, wait: 5 do
+      within current_path do
+        execute :cabal, "build"
+      end
+    end
+  end
+
 
 end
