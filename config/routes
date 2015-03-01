@@ -13,3 +13,5 @@
 /profile ProfileR GET
 
 /readables/#ReadableId/records RecordsR POST
+
+/entries EntriesR GET POST

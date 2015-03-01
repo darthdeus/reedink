@@ -24,6 +24,7 @@ library
                      Handler.Home
                      Handler.Readable
                      Handler.Record
+                     Handler.Entry
                      Helpers.Common
                      Models.Readable
                      Models.Record

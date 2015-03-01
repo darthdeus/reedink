@@ -23,11 +23,19 @@ UserReading
     readableId ReadableId
     userId UserId
     status ReadingStatus
+    deriving Show
 
 Record
     readableId ReadableId
     pageStart Int
     pageEnd Int
+    userId UserId
+    createdAt UTCTime
+    deriving Show
+
+Entry
+    title Text
+    description Text Maybe
     userId UserId
     createdAt UTCTime
     deriving Show

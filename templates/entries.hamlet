@@ -1,0 +1,4 @@
+<h1>What I have learned
+
+<form .form-inline action=@{EntriesR} method="POST">
+    ^{form}
