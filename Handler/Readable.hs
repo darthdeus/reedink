@@ -27,7 +27,8 @@ readableForm ownerId mr = renderBootstrap3 BootstrapBasicForm $ Readable
 
 getReadablesR :: Handler Html
 getReadablesR = do
-  items <- runDB $ selectList [] []
+  userId <- requireAuthId
+  items <- runDB $ maybeUserReadableReadings userId
   defaultLayout $(widgetFile "readables")
 
 getReadablesNewR :: Handler Html

@@ -17,3 +17,12 @@ userReadableReadings userId = select $ from $ \(r `LeftOuterJoin` u) -> do
              on (r E.^. ReadableId ==. u E.^. UserReadingReadableId)
              where_ (u E.^. UserReadingUserId ==. val userId)
              return (r, u)
+
+
+maybeUserReadableReadings :: MonadIO m =>
+                             UserId ->
+                             SqlPersistT m [(Entity Readable, Maybe (Entity UserReading))]
+maybeUserReadableReadings userId = select $ from $ \(r `LeftOuterJoin` mu) -> do
+             on (just (r E.^. ReadableId) ==. mu ?. UserReadingReadableId)
+             where_ (mu ?. UserReadingUserId ==. just (val userId))
+             return (r, mu)

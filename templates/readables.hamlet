@@ -1,8 +1,10 @@
 <h2>Existing literature
 
 <ul>
-    $forall Entity key readable <- items
+    $forall (Entity key readable, mreading) <- items
         <li>
             <a href=@{ReadableR key}>#{readable ^. readableTitle}
+            $maybe Entity _ reading <- mreading
+                <span .label.label-default>Status #{show $ reading ^. userReadingStatus}
 
 <a href=@{ReadablesNewR}>Add new literature
