@@ -18,6 +18,7 @@ readableForm ownerId mr = renderBootstrap3 BootstrapBasicForm $ Readable
         <*> areq textField (bs "Author") (_readableAuthor <$> mr)
         <*> areq (selectFieldList types) (bs "Literature type") (_readableType <$> mr)
         <*> areq intField (bs "# pages") (_readablePageCount <$> mr)
+        <*> aopt textField (bs "URL") (_readableUrl <$> mr)
         <*> pure (maybe ownerId id (_readableOwnerId <$> mr))
         <*  bootstrapSubmit (BootstrapSubmit ("Submit" :: Text) "btn-default" [])
         where
