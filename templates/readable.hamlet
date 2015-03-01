@@ -1,6 +1,8 @@
 <h1>#{readable ^. readableTitle}
 <h3>by #{readable ^. readableAuthor}
 
+<div .description>^{readable ^. readableDescription}
+
 <p>Here's your reading history
 <ul>
     $forall Entity _ record <- records
