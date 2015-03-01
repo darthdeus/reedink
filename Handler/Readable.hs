@@ -65,18 +65,27 @@ getReadableR key = do
 
 getReadableEditR :: ReadableId -> Handler Html
 getReadableEditR key = do
-  userid <- requireAuthId
+  userId <- requireAuthId
   readable <- runDB $ get404 key
-  (form, _) <- generateFormPost $ readableForm userid $ Just readable
+
+  when (readable ^. readableOwnerId /= userId) $ do
+    setMessage "You're not authorized to edit this literature"
+    redirect $ ReadableR key
+
+  (form, _) <- generateFormPost $ readableForm userId $ Just readable
 
   defaultLayout $(widgetFile "readable-edit")
 
 putReadableR :: ReadableId -> Handler Html
 putReadableR key = do
-  userid <- requireAuthId
+  userId <- requireAuthId
   readable <- runDB $ get404 key
 
-  ((res,form), _) <- runFormPost $ readableForm userid $ Just readable
+  when (readable ^. readableOwnerId /= userId) $ do
+    setMessage "You're not authorized to edit this literature"
+    redirect $ ReadableR key
+
+  ((res,form), _) <- runFormPost $ readableForm userId $ Just readable
 
   case res of
     FormSuccess newReadable -> do
