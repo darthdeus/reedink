@@ -15,6 +15,7 @@ set :linked_files, fetch(:linked_files, []).push("config/settings.yml")
 
 # Default value for linked_dirs is []
 # set :linked_dirs, fetch(:linked_dirs, []).push('bin', 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
+set :linked_dirs, fetch(:linked_dirs, []).push('tmp/pids')
 
 # Default value for default_env is {}
 set :default_env, { path: "/opt/ghc/7.8.4/bin:$HOME/.cabal/bin:$PATH" }
