@@ -1,4 +1,17 @@
-<h1>What I have learned
+<h1>What I have learned today
 
-<form .form-inline action=@{EntriesR} method="POST">
+<form action=@{EntriesR} method="POST">
     ^{form}
+
+<h2>My learning history
+<table class="table table-striped table-bordered">
+  <tr>
+    <th>Date
+    <th>Title
+    <th>Description
+
+  $forall (Entity key entry) <- entries
+    <tr>
+      <td> #{show $ entry ^. entryCreatedAt}
+      <td> #{show $ entry ^. entryTitle}
+      <td> #{show $ entry ^. entryDescription}

@@ -9,6 +9,7 @@ getEntriesR :: Handler Html
 getEntriesR = do
   userId <- requireAuthId
   (form, _) <- generateFormPost $ entryForm userId Nothing
+  entries <- runDB $ selectList [EntryUserId ==. userId] []
   defaultLayout $(widgetFile "entries")
 
 
