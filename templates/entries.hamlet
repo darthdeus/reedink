@@ -9,9 +9,11 @@
     <th>Date
     <th>Title
     <th>Description
+    <th>
 
   $forall (Entity key entry) <- entries
     <tr>
       <td> #{show $ entry ^. entryCreatedAt}
       <td> #{show $ entry ^. entryTitle}
       <td> #{show $ entry ^. entryDescription}
+      <td> ^{linkToMethodConfirm "DELETE" "Are you sure?" (EntryR key) [] "Delete"}

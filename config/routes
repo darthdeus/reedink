@@ -15,3 +15,4 @@
 /readables/#ReadableId/records RecordsR POST
 
 /entries EntriesR GET POST
+/entries/#EntryId EntryR DELETE

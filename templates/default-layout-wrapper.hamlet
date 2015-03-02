@@ -41,7 +41,8 @@ $newline never
             $maybe Entity _ _ <- muser
                 <li>
                     <a href=@{ProfileR}>Profile
-
+                <li>
+                    <a href=@{EntriesR}>Knowledge
 
 
           <ul class="nav navbar-nav navbar-right">
