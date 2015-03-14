@@ -15,8 +15,8 @@ userReadableReadings :: MonadIO m =>
                         UserId -> SqlPersistT m [(Entity Readable, Entity UserReading)]
 userReadableReadings userId =
   select $ from $ \(r `LeftOuterJoin` u) -> do
-    on ((r E.^. ReadableId ==. u E.^. UserReadingReadableId) &&.
-        (u E.^. UserReadingUserId ==. val userId))
+    on (r E.^. ReadableId ==. u E.^. UserReadingReadableId)
+    where_ (u E.^. UserReadingUserId ==. val userId)
     return (r, u)
 
 
