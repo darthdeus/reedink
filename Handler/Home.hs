@@ -55,15 +55,17 @@ deleteSkillR key = do
 postProgressR :: SkillId -> Handler Html
 postProgressR key = do
   userId <- requireAuthId
-  mprogress <- runDB $ selectFirst [ProgressSkillId ==. key, ProgressUserId ==. userId] []
+  day <- fmap utctDay $ liftIO getCurrentTime
+  mprogress <- runDB $ selectFirst [ProgressSkillId ==. key,
+                                    ProgressUserId ==. userId,
+                                    ProgressCreatedAt ==. day] []
 
   case mprogress of
     Just _ ->
       setMessage "You've already marked progress on this skill today"
 
     Nothing -> do
-      time <- liftIO getCurrentTime
-      void . runDB $ insert $ Progress key (utctDay time) userId
+      void . runDB $ insert $ Progress key day userId
       setMessage "Progress marked"
 
   redirect SkillsR
