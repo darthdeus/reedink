@@ -41,3 +41,14 @@ Entry
     userId UserId
     createdAt UTCTime
     deriving Show
+
+Skill
+    name Text
+    userId UserId
+    deriving Show
+
+Progress
+    skillId SkillId
+    createdAt UTCTime
+    userId UserId
+    deriving Show
