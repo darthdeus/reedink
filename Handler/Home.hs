@@ -1,6 +1,6 @@
 module Handler.Home where
 
-import Import hiding (on, (==.))
+import Import hiding (on, (==.), delete)
 import qualified Import as I
 import Helpers.Common
 import Models.Readable
@@ -56,6 +56,7 @@ deleteSkillR :: SkillId -> Handler Html
 deleteSkillR key = do
   -- TODO - only delete skills that belong to the currently logged in user
   -- TODO - delete all Progress that belongs to a given skill
+  runDB $ delete $ from $ \p -> where_ (p ^. ProgressSkillId ==. val key)
   runDB $ I.delete key
   setMessage "Skill deleted"
   redirect SkillsR
