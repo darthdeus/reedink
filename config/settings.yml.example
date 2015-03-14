@@ -18,7 +18,7 @@ ip-from-header: "_env:IP_FROM_HEADER:false"
 # skip-combining: false
 
 database:
-  user:     "_env:PGUSER:nufinka"
+  user:     "_env:PGUSER:darth"
   password: "_env:PGPASS:"
   host:     "_env:PGHOST:localhost"
   port:     "_env:PGPORT:5432"
