@@ -4,6 +4,8 @@ $forall Entity key skill <- skills
     <li>
         #{_skillName skill}
         &nbsp;-&nbsp;
+        <strong>
+            ^{linkToMethod "POST" (ProgressR key) [] "mark progress"}
         ^{linkToMethodConfirm "DELETE" "Are you sure?" (SkillR key) [] "delete"}
 
 <h3>Add a new skill

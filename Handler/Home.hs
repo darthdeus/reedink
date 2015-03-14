@@ -51,3 +51,19 @@ deleteSkillR key = do
   runDB $ delete key
   setMessage "Skill deleted"
   redirect SkillsR
+
+postProgressR :: SkillId -> Handler Html
+postProgressR key = do
+  userId <- requireAuthId
+  mprogress <- runDB $ selectFirst [ProgressSkillId ==. key, ProgressUserId ==. userId] []
+
+  case mprogress of
+    Just _ ->
+      setMessage "You've already marked progress on this skill today"
+
+    Nothing -> do
+      time <- liftIO getCurrentTime
+      void . runDB $ insert $ Progress key (utctDay time) userId
+      setMessage "Progress marked"
+
+  redirect SkillsR

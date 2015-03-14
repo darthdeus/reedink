@@ -19,3 +19,5 @@
 
 /skills SkillsR GET POST
 /skills/#SkillId SkillR DELETE
+
+/progress/#SkillId ProgressR POST

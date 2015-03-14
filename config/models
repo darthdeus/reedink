@@ -49,6 +49,6 @@ Skill
 
 Progress
     skillId SkillId
-    createdAt UTCTime
+    createdAt Day
     userId UserId
     deriving Show
