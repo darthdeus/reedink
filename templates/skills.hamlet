@@ -1,0 +1,9 @@
+<h1>Skills
+
+$forall Entity _ skill <- skills
+    <li>#{_skillName skill}
+
+<h3>Add a new skill
+
+<form action=@{SkillsR} method="POST">
+    ^{form}

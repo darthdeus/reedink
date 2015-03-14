@@ -16,3 +16,5 @@
 
 /entries EntriesR GET POST
 /entries/#EntryId EntryR DELETE
+
+/skills SkillsR GET POST
