@@ -43,3 +43,11 @@ postSkillsR = do
     _ -> do
       setMessage "Failed to create a skill"
       redirect SkillsR
+
+deleteSkillR :: SkillId -> Handler Html
+deleteSkillR key = do
+  -- TODO - only delete skills that belong to the currently logged in user
+  -- TODO - delete all Progress that belongs to a given skill
+  runDB $ delete key
+  setMessage "Skill deleted"
+  redirect SkillsR

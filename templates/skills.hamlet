@@ -1,7 +1,10 @@
 <h1>Skills
 
-$forall Entity _ skill <- skills
-    <li>#{_skillName skill}
+$forall Entity key skill <- skills
+    <li>
+        #{_skillName skill}
+        &nbsp;-&nbsp;
+        ^{linkToMethodConfirm "DELETE" "Are you sure?" (SkillR key) [] "delete"}
 
 <h3>Add a new skill
 
