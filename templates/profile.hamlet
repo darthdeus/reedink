@@ -2,11 +2,11 @@
 
 $forall (Entity key readable, Entity _ reading) <- items
     <li>
-        <a href=@{ReadableR key}>#{readable ^. readableTitle}
-        <span .label.label-default>#{show $ reading ^. userReadingStatus}
+        <a href=@{ReadableR key}>#{_readableTitle readable}
+        <span .label.label-default>#{show $ _userReadingStatus reading}
 
 <br>
 <h3>Learning history
 <ol>
   $forall (Entity _ entry) <- entries
-    <li> #{show $ entry ^. entryTitle} - #{show $ entry ^. entryCreatedAt}
+    <li> #{show $ _entryTitle entry} - #{show $ _entryCreatedAt entry}
