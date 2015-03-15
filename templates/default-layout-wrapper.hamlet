@@ -55,8 +55,6 @@ $newline never
                             <a href=@{AuthR LogoutR}>Logout
                     $nothing
                         <a href=@{AuthR LoginR}>Log in
-
-
     <div class="container">
       <header>
       <div id="main" role="main">

@@ -6,3 +6,26 @@
     background: #f0f0f0;
     height: 20px;
 }
+
+nav.navbar.navbar-default {
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  background-color: #C1668F;
+}
+
+.navbar-header a.navbar-brand, ul.nav p.navbar-text, ul.nav.navbar-nav a {
+  color: white;
+}
+
+.navbar-header a.navbar-brand:hover, ul.nav.navbar-nav a:hover {
+  color: #BFB1CE;
+}
+
+.container {
+  width: 60%;
+}
+
+html {
+  height: 100%;
+}
