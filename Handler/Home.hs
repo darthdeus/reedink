@@ -27,11 +27,7 @@ getSkillsR = do
   userId <- requireAuthId
   day <- fmap utctDay $ liftIO getCurrentTime
 
-  items <- runDB $ select $ from $ \(s `LeftOuterJoin` mp) -> do
-    on ((just (s E.^. SkillId) ==. mp ?. ProgressSkillId) &&.
-        (mp ?. ProgressCreatedAt ==. just (val day)))
-    where_ (s E.^. SkillUserId ==. val userId)
-    return (s, mp)
+  items <- runDB $ skillsWithProgress userId day
 
   (form, _) <- generateFormPost $ skillForm userId Nothing
 
