@@ -14,8 +14,11 @@ $forall (Entity key skill, mprogress, progresses) <- items
         ^{linkToMethodConfirm "DELETE" "Are you sure?" (SkillR key) [] "delete"}
 
         <ul>
-            $forall Entity _ progress <- progresses
-                <li>#{show progress}
+            $forall (day, mp) <- progresses
+                $maybe Entity _ _ <- mp
+                    <span class="label label-success">#{show day}
+                $nothing
+                    <span class="label label-default">#{show day}
 
 <h3>Add a new skill
 

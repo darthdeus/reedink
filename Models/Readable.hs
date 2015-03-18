@@ -1,9 +1,12 @@
 module Models.Readable where
 
 import Import hiding (on, (==.))
+import Control.Monad.ST
+import Data.STRef
 import Data.Aeson
 import Database.Esqueleto
 import qualified Database.Esqueleto as E
+import Debug.Trace
 
 chartData :: [Record] -> Text
 chartData records = decodeUtf8 $ toStrict $ encode $ map encoder records
@@ -28,31 +31,42 @@ maybeUserReadableReadings userId =
         (mu ?. UserReadingUserId ==. just (val userId)))
     return (r, mu)
 
--- skillProgression :: MonadIO m =>
---                     UserId ->
---                     SqlPersistT m [(Entity Skill, [Entity Progress])]
--- skillProgression userId = do
-
---   skills <- select $ from $ \s -> do
---     where_ (s ^. SkillUserId ==. val userId)
---     return s
-
+type ProgressToday = Maybe (Entity Progress)
+type DailyProgress = (Day, Maybe (Entity Progress))
 
 skillsWithProgress ::
   MonadIO m =>
   UserId
   -> Day
-  -> SqlPersistT m [(Entity Skill, Maybe (Entity Progress), [Entity Progress])]
+  -> SqlPersistT m [(Entity Skill, ProgressToday, [DailyProgress])]
 skillsWithProgress userId day = do
   skills <- select $ from $ \(s `LeftOuterJoin` mp) -> do
-    on ((just (s ^. SkillId) ==. mp ?. ProgressSkillId) &&.
-        (mp ?. ProgressCreatedAt ==. just (val day)))
-    where_ (s ^. SkillUserId ==. val userId)
-    return (s, mp)
+              on ((just (s ^. SkillId) ==. mp ?. ProgressSkillId) &&.
+                  (mp ?. ProgressCreatedAt ==. just (val day)))
+              where_ (s ^. SkillUserId ==. val userId)
+              return (s, mp)
 
   forM skills $ \(skill@(Entity key _), mp) -> do
     ps <- select $ from $ \p -> do
             where_ (p ^. ProgressSkillId ==. val key)
+            orderBy [asc (p ^. ProgressCreatedAt)]
             return p
 
-    return (skill, mp, ps)
+    let dailyProgresses =
+          runST $ do
+            ref <- newSTRef ps
+
+            forM (take 2 $ [day,pred day ..]) $ \d -> do
+              currentProgresses <- readSTRef ref
+
+              case currentProgresses of
+                [] -> do
+                  return (d, Nothing)
+                (p:rest) -> do
+                  if _progressCreatedAt (entityVal p) == d
+                    then do
+                      writeSTRef ref rest
+                      return (d, Just p)
+                    else return (d, Nothing)
+
+    return (skill, mp, dailyProgresses)
