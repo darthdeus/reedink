@@ -1,6 +1,6 @@
 <h1>Skills
 
-$forall (Entity key skill, mprogress) <- items
+$forall (Entity key skill, mprogress, progresses) <- items
     <li>
         #{_skillName skill}
         &nbsp;-&nbsp;
@@ -12,6 +12,13 @@ $forall (Entity key skill, mprogress) <- items
                 ^{linkToMethod "POST" (ProgressR key) [] "mark progress"}
 
         ^{linkToMethodConfirm "DELETE" "Are you sure?" (SkillR key) [] "delete"}
+
+        <ul>
+            $forall (day, mp) <- progresses
+                $maybe Entity _ _ <- mp
+                    <span class="label label-success">#{show day}
+                $nothing
+                    <span class="label label-default">#{show day}
 
 <h3>Add a new skill
 

@@ -27,11 +27,7 @@ getSkillsR = do
   userId <- requireAuthId
   day <- fmap utctDay $ liftIO getCurrentTime
 
-  items <- runDB $ select $ from $ \(s `LeftOuterJoin` mp) -> do
-    on ((just (s E.^. SkillId) ==. mp ?. ProgressSkillId) &&.
-        (mp ?. ProgressCreatedAt ==. just (val day)))
-    where_ (s E.^. SkillUserId ==. val userId)
-    return (s, mp)
+  items <- runDB $ skillsWithProgress userId day
 
   (form, _) <- generateFormPost $ skillForm userId Nothing
 
@@ -55,7 +51,6 @@ postSkillsR = do
 deleteSkillR :: SkillId -> Handler Html
 deleteSkillR key = do
   -- TODO - only delete skills that belong to the currently logged in user
-  -- TODO - delete all Progress that belongs to a given skill
   runDB $ delete $ from $ \p -> where_ (p ^. ProgressSkillId ==. val key)
   runDB $ I.delete key
   setMessage "Skill deleted"
