@@ -8,7 +8,9 @@ import Control.Lens
 getEntriesR :: Handler Html
 getEntriesR = do
   userId <- requireAuthId
-  (form, _) <- generateFormPost $ entryForm userId Nothing
+  skills <- runDB $ selectList [SkillUserId ==. userId] []
+
+  (form, _) <- generateFormPost $ entryForm skills userId Nothing
   entries <- runDB $ selectList [EntryUserId ==. userId] []
   defaultLayout $(widgetFile "entries")
 
@@ -16,7 +18,7 @@ getEntriesR = do
 postEntriesR :: Handler Html
 postEntriesR = do
   userId <- requireAuthId
-  ((res, form), _) <- runFormPost $ entryForm userId Nothing
+  ((res, form), _) <- runFormPost $ entryForm [] userId Nothing
 
   case res of
     FormSuccess entry -> do
@@ -38,10 +40,14 @@ deleteEntryR entryId = do
   setMessage "Deleted successful."
   redirect EntriesR
 
-entryForm :: UserId -> Maybe Entry -> Form Entry
-entryForm userId mentry = renderBootstrap3 BootstrapBasicForm $ Entry
+entryForm :: [Entity Skill] -> UserId -> Maybe Entry -> Form Entry
+entryForm skills userId mentry = renderBootstrap3 BootstrapBasicForm $ Entry
   <$> areq textField (bs "Title") (mentry ^? _Just.entryTitle)
   <*> aopt textField (bs "Description") (mentry ^? _Just.entryDescription)
   <*> pure (maybe userId id (_entryUserId <$> mentry))
   <*> lift (liftIO getCurrentTime)
+  <*> areq (selectFieldList skillList) "Skills" (mentry ^? _Just.entrySkillId)
   <*  bootstrapSubmit (BootstrapSubmit ("Submit" :: Text) "btn-default" [])
+  where
+    skillList = map (\(Entity key skill) -> (_skillName skill, key)) skills
+

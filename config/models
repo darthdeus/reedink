@@ -40,6 +40,7 @@ Entry
     description Text Maybe
     userId UserId
     createdAt UTCTime
+    skillId SkillId
     deriving Show
 
 Skill
